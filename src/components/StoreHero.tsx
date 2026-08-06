@@ -1,4 +1,4 @@
-import { BadgeCheck, Flame, MessageCircle, Music2, Send, Video, Zap } from 'lucide-react';
+import { BadgeCheck, Flame, Zap } from 'lucide-react';
 import Image from 'next/image';
 
 const LINKS = [
@@ -6,29 +6,26 @@ const LINKS = [
     label: 'YouTube',
     href: 'https://youtube.com/@JPVerasTech',
     hint: 'JPVerasTech',
-    icon: Video,
-    color: '#E0402F',
+    logo: '/youtube.svg',
   },
   {
     label: 'TikTok',
     href: 'https://www.tiktok.com/@mundo.pc8',
     hint: '@mundo.pc8',
-    icon: Music2,
-    color: '#111111',
+    logo: '/tiktok.svg',
+    backdrop: true,
   },
   {
     label: 'WhatsApp',
     href: 'https://whatsapp.com/channel/',
     hint: 'Canal de ofertas',
-    icon: MessageCircle,
-    color: '#25D366',
+    logo: '/whatsapp.svg',
   },
   {
     label: 'Telegram',
     href: 'https://t.me/',
     hint: 'Grupo ativo',
-    icon: Send,
-    color: '#26A5E4',
+    logo: '/telegram.svg',
   },
 ];
 
@@ -73,14 +70,21 @@ export function StoreHero({ totalOffers, avgDiscountPct, storeCount }: StoreHero
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-1.5 rounded-[10px] border border-border bg-surface px-3 py-2 text-text transition hover:border-accent"
+              className="group flex items-center gap-2 rounded-[10px] border border-border bg-surface px-3 py-2 text-text transition hover:border-accent"
             >
-              <div
-                className="flex h-[18px] w-[18px] shrink-0 items-center justify-center rounded-[5px] text-white"
-                style={{ background: link.color }}
+              <span
+                className={`flex h-5 w-5 shrink-0 items-center justify-center overflow-hidden rounded-[5px] ${
+                  link.backdrop ? 'bg-white p-[3px]' : ''
+                }`}
               >
-                <link.icon size={11} strokeWidth={2.4} />
-              </div>
+                <Image
+                  src={link.logo}
+                  alt=""
+                  width={20}
+                  height={20}
+                  className="h-full w-full object-contain"
+                />
+              </span>
               <span className="text-xs font-semibold">{link.label}</span>
             </a>
           ))}

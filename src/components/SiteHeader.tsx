@@ -13,7 +13,7 @@ type SiteHeaderProps =
 export function SiteHeader(props: SiteHeaderProps) {
   return (
     <div className="sticky top-0 z-20 border-b border-border bg-surface">
-      <div className="mx-auto flex max-w-[1280px] items-center gap-5 px-4 py-3.5 md:px-8">
+      <div className="mx-auto flex max-w-[1280px] items-center gap-3 px-4 py-3.5 sm:gap-5 md:px-8">
         <Link href="/" className="flex shrink-0 items-center gap-2.5">
           <Image
             src="/jpverastech-logo.jpg"
@@ -23,7 +23,7 @@ export function SiteHeader(props: SiteHeaderProps) {
             className="h-9 w-9 shrink-0 rounded-full object-cover"
             priority
           />
-          <span className="whitespace-nowrap font-display text-[15px] font-extrabold text-text">
+          <span className="hidden whitespace-nowrap font-display text-[15px] font-extrabold text-text sm:inline">
             {BRAND_NAME}
           </span>
         </Link>
@@ -37,15 +37,12 @@ export function SiteHeader(props: SiteHeaderProps) {
             <span>{props.breadcrumbCategory ?? 'Oferta'}</span>
           </div>
         ) : (
-          <>
-            <Suspense fallback={<div className="h-[42px] max-w-[480px] flex-1 rounded-xl bg-surface-alt" />}>
-              <HeaderSearch />
-            </Suspense>
-            <div className="flex-1" />
-          </>
+          <Suspense fallback={<div className="h-[42px] max-w-[480px] flex-1 rounded-xl bg-surface-alt" />}>
+            <HeaderSearch />
+          </Suspense>
         )}
 
-        <div className="hidden shrink-0 items-center gap-2 rounded-full bg-accent-soft px-3 py-1.5 text-xs font-bold text-accent sm:flex">
+        <div className="ml-auto hidden shrink-0 items-center gap-2 rounded-full bg-accent-soft px-3 py-1.5 text-xs font-bold text-accent sm:flex">
           <div className="h-1.5 w-1.5 rounded-full bg-accent" />
           {props.offersTodayCount.toLocaleString('pt-BR')} ofertas hoje
         </div>

@@ -1,9 +1,8 @@
 import { Suspense } from 'react';
 import { CategoryChips } from '@/components/CategoryChips';
 import { FeaturedOffer } from '@/components/FeaturedOffer';
-import { OfferCard } from '@/components/OfferCard';
+import { InfiniteOfferGrid } from '@/components/InfiniteOfferGrid';
 import { OfferControls } from '@/components/OfferControls';
-import { Pagination } from '@/components/Pagination';
 import { SiteHeader } from '@/components/SiteHeader';
 import { StoreHero } from '@/components/StoreHero';
 import { discountPercent } from '@/lib/format';
@@ -87,21 +86,12 @@ export default async function HomePage({ searchParams }: HomeProps) {
           <>
             {featured && <FeaturedOffer offer={featured} />}
 
-            <div className="mt-[22px] grid gap-[18px] [grid-template-columns:repeat(auto-fill,minmax(250px,1fr))]">
-              {gridOffers.map((offer, index) => (
-                <OfferCard key={offer.id} offer={offer} index={index} />
-              ))}
-            </div>
-
-            <Pagination
-              page={result.page}
+            <InfiniteOfferGrid
+              key={`${sp.q ?? ''}|${sp.category ?? ''}|${sp.store ?? ''}|${sort}`}
+              initialOffers={gridOffers}
+              initialPage={result.page}
               totalPages={result.totalPages}
-              searchParams={{
-                q: sp.q,
-                category: sp.category,
-                store: sp.store,
-                sort: sp.sort,
-              }}
+              filters={{ q: sp.q, category: sp.category, store: sp.store, sort: sp.sort }}
             />
           </>
         )}
