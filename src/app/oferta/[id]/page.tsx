@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { CouponButton } from '@/components/CouponButton';
+import { ImageLightbox } from '@/components/ImageLightbox';
 import { SiteHeader } from '@/components/SiteHeader';
 import {
   discountPercent,
@@ -52,21 +53,11 @@ export default async function OfferPage({ params }: OfferPageProps) {
       <main className="mx-auto max-w-[1100px] px-4 pb-16 pt-8 md:px-6">
         <div className="flex flex-wrap gap-6">
           <div className="flex flex-[1_1_420px] flex-col gap-3.5">
-            <div className="flex h-[400px] items-center justify-center rounded-[18px] border border-border bg-surface-alt">
+            <div className="flex h-[400px] items-center justify-center overflow-hidden rounded-[18px] bg-white shadow-[0_20px_40px_-16px_rgba(0,0,0,0.6)]">
               {offer.image_url ? (
-                <div className="relative h-full w-full">
-                  <Image
-                    src={offer.image_url}
-                    alt={offer.title}
-                    fill
-                    priority
-                    sizes="(max-width:1024px) 100vw, 50vw"
-                    className="rounded-[14px] object-contain p-6"
-                    unoptimized
-                  />
-                </div>
+                <ImageLightbox src={offer.image_url} alt={offer.title} />
               ) : (
-                <span className="text-sm text-text-faint">Sem imagem</span>
+                <span className="text-sm text-black/35">Sem imagem</span>
               )}
             </div>
           </div>
@@ -178,19 +169,21 @@ export default async function OfferPage({ params }: OfferPageProps) {
                 <Link
                   key={rel.id}
                   href={`/oferta/${rel.id}`}
-                  className="overflow-hidden rounded-2xl border border-border bg-surface transition hover:border-accent"
+                  className="group overflow-hidden rounded-2xl border border-border bg-surface transition hover:-translate-y-[2px] hover:border-accent/40"
                 >
-                  <div className="relative h-[110px] bg-surface-alt">
-                    {rel.image_url && (
-                      <Image
-                        src={rel.image_url}
-                        alt={rel.title}
-                        fill
-                        sizes="200px"
-                        className="object-contain p-3"
-                        unoptimized
-                      />
-                    )}
+                  <div className="p-2 pb-0">
+                    <div className="relative h-[110px] overflow-hidden rounded-lg bg-white shadow-[0_10px_20px_-10px_rgba(0,0,0,0.55)]">
+                      {rel.image_url && (
+                        <Image
+                          src={rel.image_url}
+                          alt={rel.title}
+                          fill
+                          sizes="200px"
+                          className="object-contain p-3 transition-transform duration-500 ease-out group-hover:scale-110"
+                          unoptimized
+                        />
+                      )}
+                    </div>
                   </div>
                   <div className="flex flex-col gap-1 p-2.5">
                     <div className="line-clamp-2 text-[12.5px] font-bold leading-tight text-text">

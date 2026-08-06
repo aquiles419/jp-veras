@@ -27,7 +27,7 @@ export function ThemeToggle() {
       onClick={toggle}
       title="Alternar tema"
       aria-label={isLight ? 'Mudar para tema escuro' : 'Mudar para tema claro'}
-      className="flex h-[34px] w-[34px] shrink-0 items-center justify-center rounded-[10px] bg-surface-alt text-text-soft transition-colors hover:text-accent"
+      className="flex h-10 w-10 shrink-0 touch-manipulation items-center justify-center rounded-[10px] bg-surface-alt text-text-soft transition-colors hover:text-accent active:scale-90"
     >
       <span key={isLight ? 'sun' : 'moon'} className="motion-safe:animate-icon-pop">
         {isLight ? <Sun size={16} /> : <Moon size={16} />}

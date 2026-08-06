@@ -28,27 +28,29 @@ export function OfferCard({ offer, index = 0 }: OfferCardProps) {
       aria-label={`${offer.title} — ${formatPrice(offer.price)}`}
       className={`animate-rise ${delayClass} group flex flex-col overflow-hidden rounded-2xl border border-border bg-surface transition duration-150 hover:-translate-y-[3px] hover:border-accent/40 hover:shadow-[0_12px_24px_-12px_rgba(0,0,0,0.35)]`}
     >
-      <div className="relative h-40 bg-surface-alt">
-        {offer.image_url ? (
-          <Image
-            src={offer.image_url}
-            alt=""
-            fill
-            sizes="(max-width:768px) 100vw, 33vw"
-            className="object-contain p-3 transition-transform duration-300 group-hover:scale-[1.03]"
-            unoptimized
-          />
-        ) : (
-          <div className="flex h-full items-center justify-center text-sm text-text-faint">
-            Sem imagem
-          </div>
-        )}
+      <div className="p-2.5 pb-0">
+        <div className="relative h-36 overflow-hidden rounded-xl bg-white shadow-[0_14px_28px_-12px_rgba(0,0,0,0.55)] transition-shadow duration-300 group-hover:shadow-[0_18px_36px_-10px_rgba(0,0,0,0.65)]">
+          {offer.image_url ? (
+            <Image
+              src={offer.image_url}
+              alt=""
+              fill
+              sizes="(max-width:768px) 100vw, 33vw"
+              className="object-contain p-3 transition-transform duration-500 ease-out group-hover:scale-110"
+              unoptimized
+            />
+          ) : (
+            <div className="flex h-full items-center justify-center text-sm text-black/35">
+              Sem imagem
+            </div>
+          )}
 
-        {discount != null && (
-          <div className="absolute left-2.5 top-2.5 rounded-lg bg-discount-bg px-2 py-1 text-[11.5px] font-extrabold text-discount-text">
-            -{discount}%
-          </div>
-        )}
+          {discount != null && (
+            <div className="absolute left-2 top-2 rounded-lg bg-discount-bg px-2 py-1 text-[11.5px] font-extrabold text-discount-text shadow-[0_4px_10px_-2px_rgba(0,0,0,0.5)]">
+              -{discount}%
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="flex flex-1 flex-col gap-2 p-3.5">

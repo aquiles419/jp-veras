@@ -70,6 +70,11 @@
     outline-offset: 2px;
   }
 
+  button,
+  a {
+    touch-action: manipulation;
+  }
+
   a:focus-visible,
   button:focus-visible,
   input:focus-visible,
@@ -119,6 +124,14 @@
       transparent
     );
   }
+
+  .animate-lightbox-fade {
+    animation: lightbox-fade 0.2s ease-out both;
+  }
+
+  .animate-lightbox-scale {
+    animation: lightbox-scale 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
 }
 
 @keyframes rise {
@@ -152,5 +165,25 @@
   50% {
     opacity: 0.45;
     transform: scale(0.85);
+  }
+}
+
+@keyframes lightbox-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lightbox-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }

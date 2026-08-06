@@ -37,14 +37,14 @@ type StoreHeroProps = {
 
 export function StoreHero({ totalOffers, avgDiscountPct, storeCount }: StoreHeroProps) {
   return (
-    <div className="animate-rise relative mt-6 overflow-hidden rounded-[22px] border border-border bg-surface-alt">
+    <div className="animate-rise relative mt-5 overflow-hidden rounded-2xl border border-border bg-surface-alt">
       <div
         aria-hidden
-        className="h-40 bg-[linear-gradient(120deg,color-mix(in_oklab,var(--color-accent)_35%,transparent),color-mix(in_oklab,var(--color-accent)_8%,transparent))]"
+        className="h-[68px] bg-[linear-gradient(120deg,color-mix(in_oklab,var(--color-accent)_35%,transparent),color-mix(in_oklab,var(--color-accent)_8%,transparent))]"
       />
 
-      <div className="flex flex-wrap items-start gap-5 px-7 -mt-[42px]">
-        <div className="flex h-[88px] w-[88px] shrink-0 items-center justify-center overflow-hidden rounded-full border-4 border-surface bg-black">
+      <div className="flex flex-wrap items-center gap-3.5 px-5 -mt-6">
+        <div className="flex h-[60px] w-[60px] shrink-0 items-center justify-center overflow-hidden rounded-full border-[3px] border-surface bg-black">
           <Image
             src="/jpverastech-logo.jpg"
             alt="JP Veras Tech"
@@ -53,73 +53,73 @@ export function StoreHero({ totalOffers, avgDiscountPct, storeCount }: StoreHero
             className="h-full w-full object-cover"
           />
         </div>
-        <div className="flex h-[96px] min-w-[220px] flex-1 flex-col justify-end gap-1">
+        <div className="flex min-w-[180px] flex-1 flex-col gap-0.5 pt-6">
           <div className="flex items-center gap-1.5">
-            <Flame size={18} className="shrink-0 text-accent" fill="var(--color-accent)" />
-            <span className="font-display text-[21px] font-extrabold text-text">
+            <Flame size={15} className="shrink-0 text-accent" fill="var(--color-accent)" />
+            <span className="font-display text-[16px] font-extrabold text-text">
               JP Veras Tech
             </span>
-            <BadgeCheck size={16} className="shrink-0 text-accent" fill="var(--color-accent)" stroke="var(--color-surface)" />
+            <BadgeCheck size={14} className="shrink-0 text-accent" fill="var(--color-accent)" stroke="var(--color-surface)" />
           </div>
-          <span className="text-[13px] font-semibold text-accent">@jpverastech</span>
+          <span className="text-[12px] font-semibold text-accent">@jpverastech</span>
         </div>
-        <div className="flex h-[96px] flex-wrap items-end gap-2">
+        <div className="flex flex-wrap items-center gap-1.5 pt-6">
           {LINKS.map((link) => (
             <a
               key={link.label}
               href={link.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-2 rounded-[10px] border border-border bg-surface px-3 py-2 text-text transition hover:border-accent"
+              className="group flex items-center gap-1.5 rounded-[9px] border border-border bg-surface px-2.5 py-1.5 text-text transition hover:border-accent"
             >
               <span
-                className={`flex h-5 w-5 shrink-0 items-center justify-center overflow-hidden rounded-[5px] ${
-                  link.backdrop ? 'bg-white p-[3px]' : ''
+                className={`flex h-4 w-4 shrink-0 items-center justify-center overflow-hidden rounded-[4px] ${
+                  link.backdrop ? 'bg-white p-[2px]' : ''
                 }`}
               >
                 <Image
                   src={link.logo}
                   alt=""
-                  width={20}
-                  height={20}
+                  width={16}
+                  height={16}
                   className="h-full w-full object-contain"
                 />
               </span>
-              <span className="text-xs font-semibold">{link.label}</span>
+              <span className="hidden text-[11.5px] font-semibold sm:inline">{link.label}</span>
             </a>
           ))}
         </div>
       </div>
 
-      <div className="px-7 pb-6">
-        <p className="flex max-w-[640px] items-start gap-1.5 text-[13.5px] leading-relaxed text-text-soft">
-          <Flame size={15} className="mt-0.5 shrink-0 text-accent" fill="var(--color-accent)" />
-          <span>
-            Promoções atualizadas todos os dias! Ofertas de Amazon, Mercado Livre, Shopee,
-            Magalu e AliExpress. Entre agora e não perca as promoções relâmpago!
+      <div className="px-5 pb-4">
+        <p className="mt-2.5 flex max-w-[640px] items-start gap-1.5 text-[12.5px] leading-relaxed text-text-soft">
+          <Flame size={13} className="mt-0.5 shrink-0 text-accent" fill="var(--color-accent)" />
+          <span className="line-clamp-1">
+            Promoções atualizadas todos os dias de Amazon, Mercado Livre, Shopee, Magalu e
+            AliExpress!
           </span>
         </p>
 
-        <div className="mt-[18px] flex flex-wrap gap-3.5">
-          <div className="min-w-[130px] rounded-xl border border-border bg-surface px-[18px] py-3">
-            <div className="font-display text-[22px] font-extrabold text-text">
+        <div className="mt-2.5 flex flex-wrap gap-2.5">
+          <div className="min-w-[92px] rounded-lg border border-border bg-surface px-3 py-1.5">
+            <div className="font-display text-[16px] font-extrabold text-text">
               {totalOffers.toLocaleString('pt-BR')}
             </div>
-            <div className="text-[11.5px] font-semibold text-text-faint">Ofertas hoje</div>
+            <div className="text-[10px] font-semibold text-text-faint">Ofertas hoje</div>
           </div>
-          <div className="min-w-[130px] rounded-xl border border-border bg-surface px-[18px] py-3">
-            <div className="font-display text-[22px] font-extrabold text-price">
+          <div className="min-w-[92px] rounded-lg border border-border bg-surface px-3 py-1.5">
+            <div className="font-display text-[16px] font-extrabold text-price">
               {avgDiscountPct}%
             </div>
-            <div className="text-[11.5px] font-semibold text-text-faint">Economia média</div>
+            <div className="text-[10px] font-semibold text-text-faint">Economia média</div>
           </div>
-          <div className="min-w-[130px] rounded-xl border border-border bg-surface px-[18px] py-3">
-            <div className="font-display text-[22px] font-extrabold text-text">{storeCount}</div>
-            <div className="text-[11.5px] font-semibold text-text-faint">Lojas parceiras</div>
+          <div className="min-w-[92px] rounded-lg border border-border bg-surface px-3 py-1.5">
+            <div className="font-display text-[16px] font-extrabold text-text">{storeCount}</div>
+            <div className="text-[10px] font-semibold text-text-faint">Lojas parceiras</div>
           </div>
-          <div className="flex min-w-[130px] flex-1 items-center justify-end gap-1.5">
-            <Zap size={13} className="text-text-faint" />
-            <span className="text-[11.5px] text-text-faint">
+          <div className="flex min-w-[92px] flex-1 items-center justify-end gap-1.5">
+            <Zap size={12} className="text-text-faint" />
+            <span className="text-[10.5px] text-text-faint">
               Powered by <b className="text-text-soft">JP Veras Tech</b>
             </span>
           </div>
