@@ -40,15 +40,16 @@ export function ImageLightbox({ src, alt }: ImageLightboxProps) {
         type="button"
         onClick={() => setOpen(true)}
         aria-label="Ampliar imagem do produto"
-        className="group relative h-full w-full cursor-zoom-in"
+        className="group relative h-full w-full touch-manipulation cursor-zoom-in select-none [-webkit-touch-callout:none]"
       >
         <Image
           src={src}
           alt={alt}
           fill
           priority
+          draggable={false}
           sizes="(max-width:1024px) 100vw, 50vw"
-          className="object-contain p-6 transition-transform duration-300 group-hover:scale-105"
+          className="pointer-events-none select-none object-contain p-6 transition-transform duration-300 [-webkit-touch-callout:none] [-webkit-user-drag:none] group-hover:scale-105"
           unoptimized
         />
         <span className="pointer-events-none absolute bottom-3 right-3 flex items-center gap-1.5 rounded-lg bg-black/75 px-2.5 py-1.5 text-[11px] font-bold text-white opacity-0 backdrop-blur-sm transition-opacity duration-200 group-hover:opacity-100">
@@ -84,8 +85,9 @@ export function ImageLightbox({ src, alt }: ImageLightboxProps) {
             <img
               src={src}
               alt={alt}
+              draggable={false}
               onClick={() => setZoomed((z) => !z)}
-              className={`max-h-[88vh] max-w-[92vw] touch-manipulation object-contain transition-transform duration-300 ease-out ${
+              className={`max-h-[88vh] max-w-[92vw] touch-manipulation select-none object-contain transition-transform duration-300 ease-out [-webkit-touch-callout:none] [-webkit-user-drag:none] ${
                 zoomed ? 'scale-[1.9] cursor-zoom-out' : 'scale-100 cursor-zoom-in'
               }`}
             />
