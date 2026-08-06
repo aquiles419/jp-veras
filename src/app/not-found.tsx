@@ -1,6 +1,7 @@
 import { ArrowLeft, Frown } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { siteConfig } from '@/config/site';
 
 export default function NotFound() {
   return (
@@ -8,8 +9,8 @@ export default function NotFound() {
       <div className="animate-rise flex max-w-md flex-col items-center">
         <div className="relative mb-6 flex h-20 w-20 items-center justify-center rounded-full border-4 border-surface bg-surface-alt">
           <Image
-            src="/jpverastech-logo.jpg"
-            alt="JP Veras Tech"
+            src={siteConfig.logo}
+            alt={siteConfig.name}
             width={654}
             height={640}
             className="h-full w-full rounded-full object-cover opacity-40 grayscale"

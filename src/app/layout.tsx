@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Manrope } from 'next/font/google';
 import Script from 'next/script';
+import { siteConfig } from '@/config/site';
 import './globals.css';
 
 const manrope = Manrope({
@@ -18,8 +19,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'JP Veras Tech',
-  description: 'Ofertas atualizadas diariamente de Amazon, Shopee, Magalu e mais.',
+  title: siteConfig.name,
+  description: siteConfig.tagline,
 };
 
 const THEME_INIT_SCRIPT = `

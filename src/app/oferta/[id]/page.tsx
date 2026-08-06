@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { CouponButton } from '@/components/CouponButton';
 import { ImageLightbox } from '@/components/ImageLightbox';
 import { SiteHeader } from '@/components/SiteHeader';
+import { siteConfig } from '@/config/site';
 import {
   discountPercent,
   formatCapturedAt,
@@ -25,7 +26,7 @@ export async function generateMetadata({ params }: OfferPageProps) {
   const offer = await OfferService.getOfferById(id);
   if (!offer) return { title: 'Oferta não encontrada' };
   return {
-    title: `${offer.title} | JP Veras Tech`,
+    title: `${offer.title} | ${siteConfig.name}`,
     description: offer.coupon_description ?? offer.preco_extenso ?? offer.title,
   };
 }
@@ -154,7 +155,7 @@ export default async function OfferPage({ params }: OfferPageProps) {
             </div>
 
             <div className="text-center text-[11.5px] text-text-faint">
-              Compartilhado via <span className="font-bold text-accent">JP Veras Tech</span>
+              Compartilhado via <span className="font-bold text-accent">{siteConfig.name}</span>
             </div>
           </div>
         </div>

@@ -1,10 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Suspense } from 'react';
+import { siteConfig } from '@/config/site';
 import { HeaderSearch } from './HeaderSearch';
 import { ThemeToggle } from './ThemeToggle';
-
-const BRAND_NAME = 'JP Veras Tech';
 
 type SiteHeaderProps =
   | { mode: 'store'; offersTodayCount: number }
@@ -16,15 +15,15 @@ export function SiteHeader(props: SiteHeaderProps) {
       <div className="mx-auto flex max-w-[1280px] items-center gap-3 px-4 py-3.5 sm:gap-5 md:px-8">
         <Link href="/" className="flex shrink-0 items-center gap-2.5">
           <Image
-            src="/jpverastech-logo.jpg"
-            alt={BRAND_NAME}
+            src={siteConfig.logo}
+            alt={siteConfig.name}
             width={654}
             height={640}
             className="h-9 w-9 shrink-0 rounded-full object-cover"
             priority
           />
           <span className="hidden whitespace-nowrap font-display text-[15px] font-extrabold text-text sm:inline">
-            {BRAND_NAME}
+            {siteConfig.name}
           </span>
         </Link>
 
