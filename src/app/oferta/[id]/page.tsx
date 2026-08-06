@@ -53,7 +53,7 @@ export default async function OfferPage({ params }: OfferPageProps) {
       <main className="mx-auto max-w-[1100px] px-4 pb-16 pt-8 md:px-6">
         <div className="flex flex-wrap gap-6">
           <div className="flex flex-[1_1_420px] flex-col gap-3.5">
-            <div className="flex h-[400px] items-center justify-center overflow-hidden rounded-[18px] bg-white shadow-[0_20px_40px_-16px_rgba(0,0,0,0.6)]">
+            <div className="flex h-[400px] items-center justify-center overflow-hidden rounded-[18px] bg-white shadow-[0_10px_22px_-14px_rgba(0,0,0,0.35)]">
               {offer.image_url ? (
                 <ImageLightbox src={offer.image_url} alt={offer.title} />
               ) : (
@@ -172,7 +172,7 @@ export default async function OfferPage({ params }: OfferPageProps) {
                   className="group overflow-hidden rounded-2xl border border-border bg-surface transition hover:-translate-y-[2px] hover:border-accent/40"
                 >
                   <div className="p-2 pb-0">
-                    <div className="relative h-[110px] overflow-hidden rounded-lg bg-white shadow-[0_10px_20px_-10px_rgba(0,0,0,0.55)]">
+                    <div className="relative h-[110px] overflow-hidden rounded-lg bg-white shadow-[0_5px_12px_-9px_rgba(0,0,0,0.3)]">
                       {rel.image_url && (
                         <Image
                           src={rel.image_url}

@@ -23,7 +23,7 @@ export function FeaturedOffer({ offer }: FeaturedOfferProps) {
       className="animate-rise group mt-[22px] flex flex-wrap overflow-hidden rounded-[20px] border border-border bg-surface transition hover:border-accent"
     >
       <div className="flex-[1_1_320px] p-4">
-        <div className="relative h-[248px] overflow-hidden rounded-2xl bg-white shadow-[0_18px_36px_-14px_rgba(0,0,0,0.6)] transition-shadow duration-300 group-hover:shadow-[0_24px_44px_-12px_rgba(0,0,0,0.7)]">
+        <div className="relative h-[248px] overflow-hidden rounded-2xl bg-white shadow-[0_8px_18px_-12px_rgba(0,0,0,0.35)] transition-shadow duration-300 group-hover:shadow-[0_12px_24px_-10px_rgba(0,0,0,0.42)]">
           {offer.image_url ? (
             <Image
               src={offer.image_url}
@@ -39,7 +39,7 @@ export function FeaturedOffer({ offer }: FeaturedOfferProps) {
               Sem imagem
             </div>
           )}
-          <div className="absolute left-3.5 top-3.5 flex items-center gap-1 rounded-lg bg-accent px-2.5 py-1.5 text-[11.5px] font-extrabold text-black shadow-[0_4px_12px_-2px_rgba(0,0,0,0.4)]">
+          <div className="absolute left-3.5 top-3.5 flex items-center gap-1 rounded-lg bg-accent px-2.5 py-1.5 text-[11.5px] font-extrabold text-black shadow-[0_2px_8px_-2px_rgba(0,0,0,0.25)]">
             <Star size={12} fill="currentColor" />
             OFERTA EM DESTAQUE
           </div>

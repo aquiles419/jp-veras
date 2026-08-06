@@ -84,35 +84,41 @@ export function CategoryChips({
   }
 
   return (
-    <div className="fade-scroll-x mt-[22px] flex items-center gap-2.5 overflow-x-auto pb-1.5">
-      <Link
-        href={hrefFor(undefined)}
-        className={`flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 text-[13px] font-bold transition-colors ${
-          !activeCategory
-            ? 'bg-accent text-black'
-            : 'bg-surface-alt text-text-soft hover:text-text'
-        }`}
-      >
-        <LayoutGrid size={14} strokeWidth={2.2} />
-        Todas
-      </Link>
-      {categories.map((chip) => {
-        const Icon = iconForCategory(chip.label);
-        return (
-          <Link
-            key={chip.label}
-            href={hrefFor(chip.label)}
-            className={`flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 text-[13px] font-bold transition-colors ${
-              activeCategory === chip.label
-                ? 'bg-accent text-black'
-                : 'bg-surface-alt text-text-soft hover:text-text'
-            }`}
-          >
-            <Icon size={14} strokeWidth={2.2} />
-            {chip.label} · {chip.count}
-          </Link>
-        );
-      })}
+    <div className="mt-[22px]">
+      <div className="mb-2 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.05em] text-text-faint">
+        <LayoutGrid size={12} strokeWidth={2.4} />
+        Categorias
+      </div>
+      <div className="fade-scroll-x flex items-center gap-2.5 overflow-x-auto pb-1.5">
+        <Link
+          href={hrefFor(undefined)}
+          className={`flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 text-[13px] font-bold transition-colors ${
+            !activeCategory
+              ? 'bg-accent text-black'
+              : 'bg-surface-alt text-text-soft hover:text-text'
+          }`}
+        >
+          <LayoutGrid size={14} strokeWidth={2.2} />
+          Todas
+        </Link>
+        {categories.map((chip) => {
+          const Icon = iconForCategory(chip.label);
+          return (
+            <Link
+              key={chip.label}
+              href={hrefFor(chip.label)}
+              className={`flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 text-[13px] font-bold transition-colors ${
+                activeCategory === chip.label
+                  ? 'bg-accent text-black'
+                  : 'bg-surface-alt text-text-soft hover:text-text'
+              }`}
+            >
+              <Icon size={14} strokeWidth={2.2} />
+              {chip.label} · {chip.count}
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 }

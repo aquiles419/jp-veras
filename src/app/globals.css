@@ -116,13 +116,7 @@
   }
 
   .fade-scroll-x {
-    mask-image: linear-gradient(
-      to right,
-      transparent,
-      black 20px,
-      black calc(100% - 28px),
-      transparent
-    );
+    mask-image: linear-gradient(to right, black calc(100% - 28px), transparent);
   }
 
   .animate-lightbox-fade {

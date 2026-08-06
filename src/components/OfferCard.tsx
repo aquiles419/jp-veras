@@ -29,7 +29,7 @@ export function OfferCard({ offer, index = 0 }: OfferCardProps) {
       className={`animate-rise ${delayClass} group flex flex-col overflow-hidden rounded-2xl border border-border bg-surface transition duration-150 hover:-translate-y-[3px] hover:border-accent/40 hover:shadow-[0_12px_24px_-12px_rgba(0,0,0,0.35)]`}
     >
       <div className="p-2.5 pb-0">
-        <div className="relative h-36 overflow-hidden rounded-xl bg-white shadow-[0_14px_28px_-12px_rgba(0,0,0,0.55)] transition-shadow duration-300 group-hover:shadow-[0_18px_36px_-10px_rgba(0,0,0,0.65)]">
+        <div className="relative h-36 overflow-hidden rounded-xl bg-white shadow-[0_6px_14px_-10px_rgba(0,0,0,0.3)] transition-shadow duration-300 group-hover:shadow-[0_10px_20px_-10px_rgba(0,0,0,0.4)]">
           {offer.image_url ? (
             <Image
               src={offer.image_url}
@@ -46,7 +46,7 @@ export function OfferCard({ offer, index = 0 }: OfferCardProps) {
           )}
 
           {discount != null && (
-            <div className="absolute left-2 top-2 rounded-lg bg-discount-bg px-2 py-1 text-[11.5px] font-extrabold text-discount-text shadow-[0_4px_10px_-2px_rgba(0,0,0,0.5)]">
+            <div className="absolute left-2 top-2 rounded-lg bg-discount-bg px-2 py-1 text-[11.5px] font-extrabold text-discount-text shadow-[0_2px_6px_-1px_rgba(0,0,0,0.25)]">
               -{discount}%
             </div>
           )}
