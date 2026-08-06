@@ -38,6 +38,7 @@ export function OfferCard({ offer, index = 0 }: OfferCardProps) {
               sizes="(max-width:768px) 100vw, 33vw"
               className="object-contain p-3 transition-transform duration-500 ease-out group-hover:scale-110"
               unoptimized
+              priority={index < 4}
             />
           ) : (
             <div className="flex h-full items-center justify-center text-sm text-black/35">

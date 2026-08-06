@@ -10,6 +10,14 @@ export function getAuthHeaders(): HeadersInit {
   };
 }
 
+export function getUserId(): string {
+  const userId = process.env.USER_ID;
+  if (!userId) {
+    throw new Error('USER_ID não definido. Configure no arquivo .env');
+  }
+  return userId;
+}
+
 /** Ex.: "0-4/73007" → 73007 */
 export function parseTotalFromContentRange(contentRange: string | null): number {
   if (!contentRange) return 0;

@@ -58,3 +58,31 @@ export interface StorefrontStats {
   avgDiscountPct: number;
   storeCount: number;
 }
+
+export interface OfferLogPlatform {
+  name: string;
+  logo_url: string | null;
+}
+
+/**
+ * Registro da tabela `offer_logs` — ofertas enviadas a um usuário específico.
+ */
+export interface OfferLogRecord {
+  id: string;
+  offer_hash: string;
+  short_id: string | null;
+  title: string;
+  price: number;
+  image_url: string | null;
+  target_url: string | null;
+  created_at: string;
+  category: string | null;
+  platforms: OfferLogPlatform | null;
+}
+
+export interface GetOfferLogsOptions {
+  page?: number;
+  pageSize?: number;
+  /** @default 'sent' */
+  status?: string;
+}
