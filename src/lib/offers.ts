@@ -57,7 +57,7 @@ export class OfferService {
       params.set('select', OFFER_SELECT);
       params.set(
         'order',
-        options.sortBy === 'preco' ? 'price.asc' : 'received_at.desc'
+        options.sortBy === 'preco' ? 'price.asc,id.asc' : 'received_at.desc,id.asc'
       );
       params.set('limit', String(pageSize));
       params.set('offset', String(offset));

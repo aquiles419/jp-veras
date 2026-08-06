@@ -59,7 +59,11 @@ export function InfiniteOfferGrid({
       })
       .then((json) => {
         if (cancelled) return;
-        setOffers((prev) => [...prev, ...json.data]);
+        setOffers((prev) => {
+          const seenIds = new Set(prev.map((offer) => offer.id));
+          const newOffers = json.data.filter((offer) => !seenIds.has(offer.id));
+          return [...prev, ...newOffers];
+        });
         setPage(nextPage);
       })
       .catch(() => {
