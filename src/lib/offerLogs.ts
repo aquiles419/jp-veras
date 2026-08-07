@@ -6,6 +6,7 @@ import {
 } from './http';
 import type {
   GetOfferLogsOptions,
+  OfferLogMetadata,
   OfferLogRecord,
   PaginatedResponse,
 } from './types';
@@ -74,6 +75,38 @@ export class OfferLogService {
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err);
       throw new Error(`OfferLogService.getByUserId: ${message}`);
+    }
+  }
+
+  /**
+   * URL de conversão rastreada (metadata.converted_url) do envio mais recente
+   * dessa oferta para o usuário da env. Retorna null se a oferta nunca foi
+   * enviada a esse usuário.
+   */
+  static async getConvertedUrl(offerHash: string): Promise<string | null> {
+    try {
+      const params = new URLSearchParams();
+      params.set('select', 'metadata');
+      params.set('offer_hash', `eq.${offerHash}`);
+      params.set('user_id', `eq.${getUserId()}`);
+      params.set('order', 'created_at.desc');
+      params.set('limit', '1');
+
+      const response = await fetch(`${API_BASE}/offer_logs?${params.toString()}`, {
+        headers: getAuthHeaders(),
+        next: { revalidate: 60 },
+      });
+
+      if (!response.ok) {
+        const body = await response.text();
+        throw new Error(`Falha ao buscar offer_logs (${response.status}): ${body}`);
+      }
+
+      const raw = (await response.json()) as { metadata: OfferLogMetadata | null }[];
+      return raw[0]?.metadata?.converted_url ?? null;
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      throw new Error(`OfferLogService.getConvertedUrl: ${message}`);
     }
   }
 }

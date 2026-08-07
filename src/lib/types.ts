@@ -86,3 +86,13 @@ export interface GetOfferLogsOptions {
   /** @default 'sent' */
   status?: string;
 }
+
+/** Metadados de conversão/atribuição de um envio específico de `offer_logs`. */
+export interface OfferLogMetadata {
+  billed: boolean | null;
+  converted_url: string | null;
+  connection_type: string | null;
+  destination_name: string | null;
+  success_count: number | null;
+  total_chats: number | null;
+}

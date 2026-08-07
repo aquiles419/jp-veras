@@ -15,6 +15,7 @@ import {
   parseInstallments,
   starRating,
 } from '@/lib/format';
+import { OfferLogService } from '@/lib/offerLogs';
 import { OfferService } from '@/lib/offers';
 
 type OfferPageProps = {
@@ -36,15 +37,16 @@ export default async function OfferPage({ params }: OfferPageProps) {
   const offer = await OfferService.getOfferById(id);
   if (!offer) notFound();
 
-  const [{ total }, related] = await Promise.all([
+  const [{ total }, related, convertedUrl] = await Promise.all([
     OfferService.getOffers({ page: 1, pageSize: 1 }),
     OfferService.getOffers({ category: offer.category ?? undefined, pageSize: 5 }),
+    OfferLogService.getConvertedUrl(offer.id),
   ]);
 
   const coupons = getCouponCodes(offer);
   const discount = discountPercent(offer.price, offer.price_original);
   const installments = parseInstallments(offer.installments);
-  const link = getOfferLink(offer);
+  const link = convertedUrl ?? getOfferLink(offer);
   const relatedOffers = related.data.filter((o) => o.id !== offer.id).slice(0, 4);
 
   return (
