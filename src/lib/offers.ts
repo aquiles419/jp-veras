@@ -1,6 +1,7 @@
 import {
   buildPaginatedMeta,
   getAuthHeaders,
+  getUserId,
   parseTotalFromContentRange,
 } from './http';
 import type {
@@ -39,6 +40,28 @@ const OFFER_SELECT = [
   'preco_extenso',
   'is_international',
 ].join(',');
+
+const USER_FEED_LOG_SELECT = [
+  'id',
+  'offer_hash',
+  'title',
+  'price',
+  'image_url',
+  'category',
+  'created_at',
+  'platforms(name)',
+].join(',');
+
+type UserFeedLogRow = {
+  id: string;
+  offer_hash: string;
+  title: string;
+  price: number;
+  image_url: string | null;
+  category: string | null;
+  created_at: string;
+  platforms: { name: string } | null;
+};
 
 export class OfferService {
   static async getOffers(
@@ -105,6 +128,124 @@ export class OfferService {
     }
   }
 
+  /**
+   * Feed pessoal: as ofertas efetivamente enviadas (offer_logs) ao usuário
+   * da env, na mesma ordem/itens da vitrine deles, enriquecidas com os
+   * dados completos de `offers` (desconto, avaliação, cupom) via `offer_hash`.
+   */
+  static async getUserFeed(
+    options: GetOffersOptions = {}
+  ): Promise<PaginatedResponse<OfferRecord>> {
+    const page = options.page ?? 1;
+    const pageSize = options.pageSize ?? 12;
+
+    if (page < 1) throw new Error('page deve ser >= 1');
+    if (pageSize < 1) throw new Error('pageSize deve ser >= 1');
+
+    const offset = (page - 1) * pageSize;
+
+    try {
+      const params = new URLSearchParams();
+      const select = options.storeName
+        ? USER_FEED_LOG_SELECT.replace('platforms(', 'platforms!inner(')
+        : USER_FEED_LOG_SELECT;
+      params.set('select', select);
+      params.set('user_id', `eq.${getUserId()}`);
+      params.set('status', 'eq.sent');
+      params.set(
+        'order',
+        options.sortBy === 'preco' ? 'price.asc,id.asc' : 'created_at.desc,id.asc'
+      );
+      params.set('limit', String(pageSize));
+      params.set('offset', String(offset));
+
+      if (options.category) params.set('category', `eq.${options.category}`);
+      if (options.search?.trim()) params.set('title', `ilike.*${options.search.trim()}*`);
+      if (options.storeName) params.set('platforms.name', `eq.${options.storeName}`);
+
+      const response = await fetch(`${API_BASE}/offer_logs?${params.toString()}`, {
+        headers: {
+          ...getAuthHeaders(),
+          Prefer: 'count=exact',
+        },
+        next: { revalidate: 60 },
+      });
+
+      if (!response.ok) {
+        const body = await response.text();
+        throw new Error(`Falha ao buscar offer_logs (${response.status}): ${body}`);
+      }
+
+      const total = parseTotalFromContentRange(response.headers.get('content-range'));
+      const logs = (await response.json()) as UserFeedLogRow[];
+
+      const seenHashes = new Set<string>();
+      const dedupedLogs = logs.filter((log) => {
+        if (seenHashes.has(log.offer_hash)) return false;
+        seenHashes.add(log.offer_hash);
+        return true;
+      });
+
+      const offersById = new Map<string, OfferRecord>();
+      if (dedupedLogs.length) {
+        const offerParams = new URLSearchParams();
+        offerParams.set('select', OFFER_SELECT);
+        offerParams.set(
+          'id',
+          `in.(${dedupedLogs.map((log) => log.offer_hash).join(',')})`
+        );
+
+        const offersResponse = await fetch(`${API_BASE}/offers?${offerParams.toString()}`, {
+          headers: getAuthHeaders(),
+          next: { revalidate: 60 },
+        });
+
+        if (offersResponse.ok) {
+          const rows = (await offersResponse.json()) as OfferRecord[];
+          for (const row of rows) offersById.set(row.id, row);
+        }
+      }
+
+      const data: OfferRecord[] = dedupedLogs.map((log) => {
+        const base = offersById.get(log.offer_hash);
+        return {
+          id: log.offer_hash,
+          product_id: base?.product_id ?? null,
+          product_url: base?.product_url ?? null,
+          source_url: base?.source_url ?? null,
+          platform_id: base?.platform_id ?? null,
+          category: log.category ?? base?.category ?? null,
+          title: log.title,
+          price: log.price,
+          price_original: base?.price_original ?? null,
+          installments: base?.installments ?? null,
+          rating: base?.rating ?? null,
+          reviews_count: base?.reviews_count ?? null,
+          sales_count: base?.sales_count ?? null,
+          store_name: log.platforms?.name ?? base?.store_name ?? null,
+          image_url: log.image_url ?? base?.image_url ?? null,
+          has_coupon: base?.has_coupon ?? false,
+          coupon_codes: base?.coupon_codes ?? null,
+          coupon_urls: base?.coupon_urls ?? null,
+          coupon_description: base?.coupon_description ?? null,
+          raw_caption: base?.raw_caption ?? null,
+          status: base?.status ?? null,
+          received_at: log.created_at,
+          preco_extenso: base?.preco_extenso ?? null,
+          is_international: base?.is_international ?? null,
+        };
+      });
+
+      return {
+        data,
+        ...buildPaginatedMeta(total, page, pageSize),
+      };
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      throw new Error(`OfferService.getUserFeed: ${message}`);
+    }
+  }
+
   static async getOfferById(id: string): Promise<OfferRecord | null> {
     try {
       const params = new URLSearchParams();
@@ -133,7 +274,7 @@ export class OfferService {
 
   /** Categorias, lojas e agregados a partir de uma amostra recente. */
   static async getStorefrontStats(): Promise<StorefrontStats> {
-    const result = await this.getOffers({ page: 1, pageSize: 100 });
+    const result = await this.getUserFeed({ page: 1, pageSize: 100 });
 
     const categoryCounts = new Map<string, number>();
     for (const offer of result.data) {
@@ -166,6 +307,10 @@ export class OfferService {
 
 export function getOffers(options?: GetOffersOptions) {
   return OfferService.getOffers(options);
+}
+
+export function getUserFeed(options?: GetOffersOptions) {
+  return OfferService.getUserFeed(options);
 }
 
 export function getOfferById(id: string) {

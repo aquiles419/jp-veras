@@ -25,7 +25,7 @@ export default async function HomePage({ searchParams }: HomeProps) {
   const sort = sp.sort === 'preco' || sp.sort === 'desconto' ? sp.sort : 'recentes';
 
   const [result, stats] = await Promise.all([
-    OfferService.getOffers({
+    OfferService.getUserFeed({
       page,
       pageSize,
       search: sp.q,

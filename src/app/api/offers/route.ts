@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
   const sort = sortParam === 'preco' || sortParam === 'desconto' ? sortParam : 'recentes';
 
   try {
-    const result = await OfferService.getOffers({
+    const result = await OfferService.getUserFeed({
       page,
       pageSize: 12,
       search: q,

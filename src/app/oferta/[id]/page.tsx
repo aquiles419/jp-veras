@@ -38,8 +38,8 @@ export default async function OfferPage({ params }: OfferPageProps) {
   if (!offer) notFound();
 
   const [{ total }, related, convertedUrl] = await Promise.all([
-    OfferService.getOffers({ page: 1, pageSize: 1 }),
-    OfferService.getOffers({ category: offer.category ?? undefined, pageSize: 5 }),
+    OfferService.getUserFeed({ page: 1, pageSize: 1 }),
+    OfferService.getUserFeed({ category: offer.category ?? undefined, pageSize: 5 }),
     OfferLogService.getConvertedUrl(offer.id),
   ]);
 
